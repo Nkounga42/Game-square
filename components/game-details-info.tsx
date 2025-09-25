@@ -61,7 +61,7 @@ export function GameDetailsInfo({ game }: GameDetailsInfoProps) {
               <div>
                 <h4 className="text-sm font-medium text-gray-400 mb-1">Statut</h4>
                 <p className="text-green-400 font-medium">
-                  {game.status === 'Live' ? 'En ligne' : game.status}
+                  En ligne
                 </p>
               </div>
             </div>
