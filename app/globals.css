@@ -136,3 +136,51 @@
   transform: translateY(-4px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
+
+/* Animations pour le lazy loading des images */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) skewX(-12deg);
+  }
+  100% {
+    transform: translateX(200%) skewX(-12deg);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
+/* Effet de flou progressif */
+.blur-load {
+  filter: blur(8px);
+  transition: filter 0.7s ease-out;
+}
+
+.blur-load.loaded {
+  filter: blur(0);
+}
+
+/* Placeholder pour les images */
+.image-placeholder {
+  background: linear-gradient(
+    45deg,
+    oklch(0.15 0 0) 25%,
+    oklch(0.18 0 0) 25%,
+    oklch(0.18 0 0) 50%,
+    oklch(0.15 0 0) 50%,
+    oklch(0.15 0 0) 75%,
+    oklch(0.18 0 0) 75%
+  );
+  background-size: 20px 20px;
+  animation: placeholder-pulse 2s ease-in-out infinite;
+}
+
+@keyframes placeholder-pulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}

@@ -1,16 +1,40 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { Button } from "@/components/ui/button" 
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import BlurContainer from "./ui/BlurContainer"
-import { allGames, GAMES_PER_PAGE } from "@/lib/data"
+import { GamesGridSkeleton } from "./ui/loading"
+import { ErrorMessage, NoResults } from "./ui/error-message"
+import { GameCardImage } from "./ui/game-card-image"
+import { GAMES_PER_PAGE } from "@/lib/data"
+import Link from "next/link"
 
-interface GamesListProps {
-  filteredGames: typeof allGames
+interface GameListItem {
+  id: number
+  name: string
+  genre: string
+  platform: string
+  image: string
 }
 
-export function GamesList({ filteredGames }: GamesListProps) {
+interface GamesListProps {
+  filteredGames: GameListItem[]
+  loading?: boolean
+  error?: string | null
+  onRetry?: () => void
+  onResetFilters?: () => void
+  searchTerm?: string
+}
+
+export function GamesList({ 
+  filteredGames, 
+  loading = false, 
+  error = null, 
+  onRetry, 
+  onResetFilters, 
+  searchTerm 
+}: GamesListProps) {
   const [currentPage, setCurrentPage] = useState(1)
 
   // Pagination
@@ -24,43 +48,75 @@ export function GamesList({ filteredGames }: GamesListProps) {
   }
 
   // Reset page when filteredGames change
-  useMemo(() => {
+  useEffect(() => {
     setCurrentPage(1)
   }, [filteredGames])
 
   return (
-    <section className="py-16  max-w-5xl mx-auto">
+    <section data-games-list className="py-16 max-w-5xl mx-auto">
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-white mb-2 text-left">Bibliothèque de Jeux</h2>
       </div>
 
-      {/* Résultats */}
-      <div className="mb-6">
-        <p className="text-gray-400">
-          {filteredGames.length} jeu{filteredGames.length !== 1 ? "s" : ""} trouvé
-          {filteredGames.length !== 1 ? "s" : ""}
-        </p>
-      </div>
+      {/* Gestion des états de chargement et d'erreur */}
+      {loading && (
+        <div className="mb-8">
+          <div className="mb-6">
+            <p className="text-gray-400">Chargement des jeux...</p>
+          </div>
+          <GamesGridSkeleton />
+        </div>
+      )}
 
-      {/* Grille de jeux */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-8">
-        {paginatedGames.map((game) => (
-          <BlurContainer
-            key={game.id}
-            className="group relative bg-gray-800 rounded-lg overflow-hidden hover:scale-103 transition-all duration-300 cursor-pointer"
-          >
-            <div className="relative h-64">
-              <img src={game.image || "/placeholder.svg"} alt={game.name} className="w-full h-full object-cover" />
-              {/* Progressive blur overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-              {/* Titre */}
-              <div className="absolute bottom-0 left-0 right-0 p-3 z-30">
-                <h3 className="text-white font-semibold text-sm leading-tight text-balance">{game.name}</h3>
-              </div>
+      {error && !loading && (
+        <ErrorMessage
+          message={error}
+          onRetry={onRetry}
+          className="my-16"
+        />
+      )}
+
+      {!loading && !error && (
+        <>
+          {/* Résultats */}
+          <div className="mb-6">
+            <p className="text-gray-400">
+              {filteredGames.length} jeu{filteredGames.length !== 1 ? "s" : ""} trouvé
+              {filteredGames.length !== 1 ? "s" : ""}
+            </p>
+          </div>
+
+          {/* Aucun résultat */}
+          {filteredGames.length === 0 && (
+            <NoResults
+              searchTerm={searchTerm}
+              onReset={onResetFilters}
+              className="my-16"
+            />
+          )}
+
+          {/* Grille de jeux */}
+          {filteredGames.length > 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-8">
+              {paginatedGames.map((game) => (
+                <Link key={game.id} href={`/game/${game.id}`}>
+                  <BlurContainer
+                    className="group relative bg-gray-800 rounded-lg overflow-hidden hover:scale-103 transition-all duration-300 cursor-pointer"
+                  >
+                    <GameCardImage
+                      src={game.image || "/placeholder.svg"}
+                      alt={game.name}
+                      title={game.name}
+                      className="h-64"
+                      fallbackSrc="/placeholder.svg"
+                    />
+                  </BlurContainer>
+                </Link>
+              ))}
             </div>
-          </BlurContainer>
-        ))}
-      </div>
+          )}
+        </>
+      )}
 
       {/* Pagination */}
       {totalPages > 1 && (

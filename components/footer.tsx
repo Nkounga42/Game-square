@@ -1,17 +1,61 @@
+"use client"
+
 import { Download, Github, Twitter, Diamond as Discord } from "lucide-react"
+import { useFilterContext } from "@/contexts/FilterContext"
 
 export function Footer() {
+  const { setSelectedGenre, resetFilters } = useFilterContext()
+
+  const handleCategoryClick = (category: string) => {
+    setSelectedGenre(category)
+    // Scroll vers la section des jeux
+    setTimeout(() => {
+      const gamesSection = document.querySelector('[data-games-list]')
+      if (gamesSection) {
+        gamesSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }, 100)
+  }
+
+  const handleFilterClick = (filterType: string) => {
+    switch (filterType) {
+      case 'Nouveautés':
+        setSelectedGenre('Nouveautés')
+        break
+      case 'Populaires':
+        // Utiliser un tri par popularité
+        resetFilters()
+        // Ici on pourrait ajouter une logique de tri par popularité
+        break
+      case 'Gratuits':
+        // Tous les jeux de l'API sont gratuits, donc reset
+        resetFilters()
+        break
+      case 'Premium':
+        // Logique pour les jeux premium si applicable
+        resetFilters()
+        break
+    }
+    
+    // Scroll vers la section des jeux
+    setTimeout(() => {
+      const gamesSection = document.querySelector('[data-games-list]')
+      if (gamesSection) {
+        gamesSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }, 100)
+  }
   return (
     <footer className="bg-secondary/20 border-t border-border">
-      <div className="container px-4 py-12">
+
+      <div className="container mx-auto max-w-5xl py-12">
+        <div>
+          <div className="flex items-center gap-2 border-b pb-4 mb-8">
+            <img src="/atomic_games.png" alt="logo" className="h-30" />
+          </div>
+        </div>
         <div className="grid md:grid-cols-4 gap-8">
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-                <Download className="h-5 w-5 text-primary-foreground" />
-              </div>
-              <span className="text-xl font-bold text-foreground">GameVault</span>
-            </div>
+          <div className="space-y-4"> 
             <p className="text-sm text-muted-foreground text-pretty">
               La plateforme ultime pour découvrir et télécharger les meilleurs jeux vidéo.
             </p>
@@ -26,24 +70,36 @@ export function Footer() {
             <h3 className="font-semibold text-foreground">Jeux</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
+                <button 
+                  onClick={() => handleFilterClick('Nouveautés')}
+                  className="hover:text-foreground transition-colors text-left"
+                >
                   Nouveautés
-                </a>
+                </button>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
+                <button 
+                  onClick={() => handleFilterClick('Populaires')}
+                  className="hover:text-foreground transition-colors text-left"
+                >
                   Populaires
-                </a>
+                </button>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
+                <button 
+                  onClick={() => handleFilterClick('Gratuits')}
+                  className="hover:text-foreground transition-colors text-left"
+                >
                   Gratuits
-                </a>
+                </button>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
+                <button 
+                  onClick={() => handleFilterClick('Premium')}
+                  className="hover:text-foreground transition-colors text-left"
+                >
                   Premium
-                </a>
+                </button>
               </li>
             </ul>
           </div>
@@ -52,24 +108,36 @@ export function Footer() {
             <h3 className="font-semibold text-foreground">Catégories</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
+                <button 
+                  onClick={() => handleCategoryClick('Action')}
+                  className="hover:text-foreground transition-colors text-left"
+                >
                   Action
-                </a>
+                </button>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
+                <button 
+                  onClick={() => handleCategoryClick('RPG')}
+                  className="hover:text-foreground transition-colors text-left"
+                >
                   RPG
-                </a>
+                </button>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
+                <button 
+                  onClick={() => handleCategoryClick('Stratégie')}
+                  className="hover:text-foreground transition-colors text-left"
+                >
                   Stratégie
-                </a>
+                </button>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
+                <button 
+                  onClick={() => handleCategoryClick('Course')}
+                  className="hover:text-foreground transition-colors text-left"
+                >
                   Course
-                </a>
+                </button>
               </li>
             </ul>
           </div>
@@ -102,7 +170,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">© 2025 GameVault. Tous droits réservés.</p>
+          <p className="text-sm text-muted-foreground">© 2025 Atomic games. Tous droits réservés.</p>
           <div className="flex items-center gap-6 text-sm text-muted-foreground">
             <a href="#" className="hover:text-foreground transition-colors">
               Confidentialité

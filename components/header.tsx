@@ -1,64 +1,74 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Search, Menu, User, Download } from "lucide-react"
 import { useState } from "react"
 import { motion, AnimatePresence } from "motion/react"
 import { categories } from "@/lib/data"
+import { useFilterContext } from "@/contexts/FilterContext"
+import Link from "next/link"
 
 export function Header() {
+  const [view, setView] = useState(false)
+  const { selectedGenre, setSelectedGenre, searchTerm, setSearchTerm } = useFilterContext()
 
   const handleCategorieChange = (categorie: string) => {
-    console.log(categorie)
-    setView()
+    setSelectedGenre(categorie)
+    setView(false) // Fermer le menu après sélection
   }
-
-  const [view, setView] = useState(false)
 
   const switchView = () => {
     setView(!view)
   }
 
+  const handleNouveautes = () => {
+    // Filtrer par les jeux récents - on peut utiliser une catégorie spéciale ou un tri
+    setSelectedGenre("Nouveautés")
+    // Optionnel: scroll vers la section des jeux
+    setTimeout(() => {
+      const gamesSection = document.querySelector('[data-games-list]')
+      if (gamesSection) {
+        gamesSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }, 100)
+  }
+
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between px-4">
+    <header className="fixed top-0 z-50 w-full bg-background/95  backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-12 items-center justify-between mx-auto max-w-5xl">
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-              <Download className="h-5 w-5 text-primary-foreground" />
-            </div>
-            <span className="text-xl font-bold text-foreground">Game Square</span>
+            <img src="/atomic_games.png" alt="logo" className="h-10"/>
           </div>
 
           <nav className="hidden md:flex items-center gap-6">
-            <button className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            <Link href="/" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
               Accueil
-            </button>
+            </Link>
             <button onClick={() => switchView()} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-              Catégories
-            </button>
-            <button onClick={() => switchView()} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-              Nouveautés
-            </button>
+              Catégories {selectedGenre !== "Tous" && `(${selectedGenre})`}
+            </button> 
           </nav>
         </div>
 
         <div className="flex items-center gap-4">
           <div className="relative hidden sm:block">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input placeholder="Rechercher un jeu..." className="w-64 pl-10 bg-secondary/50 border-border" />
+            <Input 
+              placeholder="Rechercher un jeu..." 
+              className="w-64 pl-10 bg-secondary/50 border-border"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
           </div>
 
           <Button variant="ghost" size="icon" className="md:hidden">
             <Menu className="h-5 w-5" />
           </Button>
-
-          <Button variant="outline" size="sm" className="hidden md:flex bg-transparent">
-            <User className="h-4 w-4 mr-2" />
-            Connexion
-          </Button>
         </div>
       </div>
-      <div className="border-t border-border/40">
+      <div className="border-t border-border/40" >
         <AnimatePresence>
           {view && (
             <motion.div
@@ -77,14 +87,18 @@ export function Header() {
                 transition={{ duration: 0.3 }}
                 className="container flex flex-col flex-wrap gap-4 py-3  h-40 max-w-5xl mx-auto overflow-hidden"
               >
-                {categories.map((cat, index) => (
+                {["Tous", ...categories].map((cat, index) => (
                   <motion.button
                     key={cat + index}
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1, transition: { delay: index * 0.05 } }}
                     exit={{ opacity: 0, scale: 0.9 }}
                     onClick={() => handleCategorieChange(cat)}
-                    className="text-sm text-left font-medium text-muted-foreground hover:text-foreground transition-colors"
+                    className={`text-sm text-left font-medium transition-colors ${
+                      selectedGenre === cat 
+                        ? "text-foreground font-semibold" 
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
                   >
                     {cat}
                   </motion.button>

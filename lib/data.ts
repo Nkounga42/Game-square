@@ -82,7 +82,8 @@ export const categories = [
   "Stratégie",
   "Simulation",
   "Course",
-  "Plateforme"
+  "Plateforme",
+  "Nouveautés"
 ]
 
 export const GAMES_PER_PAGE = 50
