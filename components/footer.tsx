@@ -151,7 +151,7 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
+                <a href="/contact" className="hover:text-foreground transition-colors">
                   Contact
                 </a>
               </li>
@@ -171,7 +171,7 @@ export function Footer() {
 
         <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">© 2025 Atomic games. Tous droits réservés.</p>
-          <div className="flex items-center gap-6 text-sm text-muted-foreground">
+          <div className="flex items-center gap-6 text-sm text-muted-foreground" hidden>
             <a href="#" className="hover:text-foreground transition-colors">
               Confidentialité
             </a>

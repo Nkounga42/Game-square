@@ -1,8 +1,8 @@
-# 🎮 Game Square - Atomic Games
+# 🎮 Atomic game - Atomic games
 
 <div align="center">
 
-![Game Square Logo](public/atomic_games.png)
+![Atomic game Logo](public/atomic_games.png)
 
 **La plateforme ultime pour découvrir et télécharger les meilleurs jeux vidéo gratuits**
 
@@ -114,7 +114,7 @@ npm run start
 ## 📁 Structure du Projet
 
 ```
-game-square/
+Game-square/
 ├── 📁 app/                    # App Router (Next.js 13+)
 │   ├── 📁 api/               # Routes API
 │   ├── 📁 game/[id]/         # Pages dynamiques des jeux
@@ -159,7 +159,7 @@ Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de 
 
 ## 👨‍💻 Auteur
 
-**Atomic Games Team**
+**Atomic games Team**
 
 - 🌐 Website: [atomic-games.com](#)
 - 📧 Email: contact@atomic-games.com
@@ -180,6 +180,6 @@ Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de 
 
 **⭐ N'oubliez pas de donner une étoile si ce projet vous a aidé ! ⭐**
 
-Made with ❤️ by Atomic Games Team
+Made with ❤️ by Atomic games Team
 
 </div>

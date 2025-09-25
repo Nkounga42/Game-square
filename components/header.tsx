@@ -48,7 +48,10 @@ export function Header() {
             </Link>
             <button onClick={() => switchView()} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
               Catégories {selectedGenre !== "Tous" && `(${selectedGenre})`}
-            </button> 
+            </button>
+            <Link href="/contact" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+              Contact
+            </Link>
           </nav>
         </div>
 
