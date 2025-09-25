@@ -1,6 +1,6 @@
 "use client"
 
-import { Download, Github, Twitter, Diamond as Discord } from "lucide-react"
+import { Download, Github, Twitter, Diamond as Discord, Mail, Globe } from "lucide-react"
 import { useFilterContext } from "@/contexts/FilterContext"
 
 export function Footer() {
@@ -45,27 +45,52 @@ export function Footer() {
       }
     }, 100)
   }
+  
   return (
     <footer className="bg-secondary/20 border-t border-border">
-
       <div className="container mx-auto max-w-5xl py-12">
         <div>
           <div className="flex items-center gap-2 border-b pb-4 mb-8">
             <img src="/atomic_games.png" alt="logo" className="h-30" />
           </div>
         </div>
+        
         <div className="grid md:grid-cols-4 gap-8">
+          {/* Section À propos */}
           <div className="space-y-4"> 
             <p className="text-sm text-muted-foreground text-pretty">
-              La plateforme ultime pour découvrir et télécharger les meilleurs jeux vidéo.
+              La plateforme ultime pour découvrir et télécharger les meilleurs jeux vidéo gratuits.
             </p>
-            <div className="flex items-center gap-4">
-              <Github className="h-5 w-5 text-muted-foreground hover:text-foreground cursor-pointer transition-colors" />
-              <Twitter className="h-5 w-5 text-muted-foreground hover:text-foreground cursor-pointer transition-colors" />
-              <Discord className="h-5 w-5 text-muted-foreground hover:text-foreground cursor-pointer transition-colors" />
+            <div className="space-y-3">
+              <p className="text-xs text-muted-foreground font-medium">Créé par Nkounga Exaucé</p>
+              <div className="flex items-center gap-4">
+                <a 
+                  href="https://github.com/Nkounga42" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <Github className="h-5 w-5" />
+                </a>
+                <a 
+                  href="mailto:nkoungagil@gmail.com" 
+                  className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <Mail className="h-5 w-5" />
+                </a>
+                <a 
+                  href="https://nkounga42.github.io/portfolio/about" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <Globe className="h-5 w-5" />
+                </a>
+              </div>
             </div>
           </div>
 
+          {/* Section Jeux */}
           <div className="space-y-4">
             <h3 className="font-semibold text-foreground">Jeux</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
@@ -104,6 +129,7 @@ export function Footer() {
             </ul>
           </div>
 
+          {/* Section Catégories */}
           <div className="space-y-4">
             <h3 className="font-semibold text-foreground">Catégories</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
@@ -142,44 +168,71 @@ export function Footer() {
             </ul>
           </div>
 
+          {/* Section Contact & Support */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-foreground">Support</h3>
+            <h3 className="font-semibold text-foreground">Contact & Support</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
-                  Centre d'aide
-                </a>
-              </li>
-              <li>
                 <a href="/contact" className="hover:text-foreground transition-colors">
-                  Contact
+                  📧 Nous contacter
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
-                  FAQ
+                <a 
+                  href="https://github.com/Nkounga42" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-foreground transition-colors"
+                >
+                  🐙 GitHub
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground transition-colors">
-                  Communauté
+                <a 
+                  href="https://nkounga42.github.io/portfolio/about" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-foreground transition-colors"
+                >
+                  🌐 Portfolio
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="mailto:nkoungagil@gmail.com" 
+                  className="hover:text-foreground transition-colors"
+                >
+                  ✉️ Email direct
                 </a>
               </li>
             </ul>
           </div>
         </div>
 
+        {/* Section Copyright */}
         <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">© 2025 Atomic games. Tous droits réservés.</p>
-          <div className="flex items-center gap-6 text-sm text-muted-foreground" hidden>
-            <a href="#" className="hover:text-foreground transition-colors">
-              Confidentialité
-            </a>
-            <a href="#" className="hover:text-foreground transition-colors">
-              Conditions
-            </a>
-            <a href="#" className="hover:text-foreground transition-colors">
-              Cookies
+          <div className="text-center md:text-left">
+            <p className="text-sm text-muted-foreground">© 2025 Game Square - Atomic Games. Tous droits réservés.</p>
+            <p className="text-xs text-muted-foreground mt-1">
+              Développé avec ❤️ par 
+              <a 
+                href="https://nkounga42.github.io/portfolio/about" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-primary hover:underline ml-1"
+              >
+                Nkounga Exaucé
+              </a>
+            </p>
+          </div>
+          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+            <a 
+              href="https://www.freetogame.com/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:text-foreground transition-colors"
+            >
+              Powered by FreeToGame API
             </a>
           </div>
         </div>
