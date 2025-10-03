@@ -81,7 +81,7 @@ export function GamesList({
           {/* Résultats */}
           <div className="mb-6">
             <p className="text-gray-400">
-              {filteredGames.length} jeu{filteredGames.length !== 1 ? "s" : ""} trouvé
+              {filteredGames.length} jeu{filteredGames.length !== 1 ? "x" : ""} trouvé
               {filteredGames.length !== 1 ? "s" : ""}
             </p>
           </div>
